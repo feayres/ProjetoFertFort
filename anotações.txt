@@ -1,0 +1,21 @@
+MENU
+
+- home
+- estoque
+	- produtos
+	- materiais
+- pedidos
+	- pedido de compra (x)
+	- pedido de venda (x)
+	- pedido de produção (x)
+		- em produção (x)
+		- cancelados (x)
+		- finalizados hoje (x)
+- relatórios
+	- relatório de compra
+	- relatório de venda
+	- relatório de produção
+- pessoas
+	- clientes
+	- funcionários
+- configuração
