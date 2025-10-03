@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — Mostrar/Ocultar senha</title>
+  <style>
+    :root{--bg:#1f2023;--card:#fff;--muted:#8b98a5;--accent:#0f1b23}
+    *{box-sizing:border-box}
+    body{background:linear-gradient(180deg,#1a1b1f 0%, #111216 100%);font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0}
+
+    .card{width:560px;max-width:92%;background:var(--card);border-radius:12px;padding:36px 42px;box-shadow:0 10px 30px rgba(0,0,0,.45);text-align:center}
+    .logo{height:48px;margin-bottom:22px}
+
+    form{width:100%;text-align:left}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:8px}
+
+    .input-wrap{position:relative;margin-bottom:16px}
+    input[type="email"], input[type="password"]{
+      width:100%;padding:14px 14px;border-radius:6px;border:1px solid #dae4ea;background:#f7fbfd;font-size:15px;outline:none;transition:box-shadow .12s, border-color .12s
+    }
+    input:focus{box-shadow:0 0 0 4px rgba(12,86,131,0.06);border-color:#cfe6f8}
+
+    /* espaço para o botão do olho */
+    .input-wrap.password input{padding-right:48px}
+
+    /* botão do olho */
+    .toggle-password{
+      position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;padding:6px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer
+    }
+    .toggle-password:focus{outline:2px solid #cfe6f8}
+
+    .btn-primary{display:block;width:100%;padding:12px 16px;border-radius:6px;background:#17232c;color:#fff;border:0;font-size:15px;margin-top:6px;cursor:pointer}
+    .muted-center{color:var(--muted);text-align:center;margin-top:14px}
+
+    /* Icon sizing */
+    .icon{width:20px;height:20px;display:block}
+
+    /* small responsive tweak */
+    @media(max-width:420px){.card{padding:24px}}
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="Área de login">
+    <img class="logo" src="" alt="Logo" />
+
+    <form id="loginForm" autocomplete="on">
+      <div>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="seu@exemplo.com" required />
+      </div>
+
+      <div class="input-wrap password">
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" placeholder="********" required aria-describedby="pwd-help" />
+
+        <!-- botão que fica por cima do input, à direita. Usamos button (não input) para acessibilidade. -->
+        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
+          <!-- ícone SVG (olho). Vamos trocar pelo olho fechado quando necessário. -->
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="3" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="btn-primary" type="submit">Entrar</button>
+
+      <div class="muted-center">ou<br/><a href="#">Esqueceu a senha?</a></div>
+    </form>
+  </div>
+
+  <script>
+    (function(){
+      const passwordInput = document.getElementById('password');
+      const toggle = document.getElementById('togglePassword');
+
+      // SVGs para olho aberto e olho fechado (olho com linha)
+      const eyeOpen = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+
+      const eyeClosed = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17.94 17.94C16.12 19.2 14.12 20 12 20c-7 0-11-8-11-8 1.25-2.07 3-3.86 5.06-5.06" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.1 6.1C7.88 4.8 9.88 4 12 4c7 0 11 8 11 8-1.25 2.07-3 3.86-5.06 5.06" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 3l18 18" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+
+      // Inicialmente mostra olho aberto (campo oculto)
+      toggle.innerHTML = eyeOpen;
+
+      toggle.addEventListener('click', function(){
+        const isPassword = passwordInput.type === 'password';
+        if(isPassword){
+          passwordInput.type = 'text';
+          toggle.innerHTML = eyeClosed; // ícone que indica 'fechar'
+          toggle.setAttribute('aria-label','Esconder senha');
+          toggle.setAttribute('title','Esconder senha');
+          toggle.setAttribute('aria-pressed','true');
+        } else {
+          passwordInput.type = 'password';
+          toggle.innerHTML = eyeOpen;
+          toggle.setAttribute('aria-label','Mostrar senha');
+          toggle.setAttribute('title','Mostrar senha');
+          toggle.setAttribute('aria-pressed','false');
+        }
+        // manter o foco no botão após mudança
+        toggle.focus();
+      });
+
+      // opcional: permitir alternar com tecla Enter/Space quando o botão estiver focado (já vem por padrão em <button>)
+
+      // evitar envio de form ao apertar Enter no botão do olho
+      toggle.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          toggle.click();
+        }
+      });
+
+      // Se quiser: clicar no ícone não tira foco do input (bom para usabilidade em mobile)
+      toggle.addEventListener('mousedown', function(e){ e.preventDefault(); });
+
+    })();
+  </script>
+</body>
+</html>
