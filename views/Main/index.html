@@ -1,46 +1,82 @@
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Página Principal</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard com Submenu</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-<div class="sidebar">
-<h2>Gestão de Estoque</h2>
-<div class="menu-icon" onclick="toggleMenu()">☰</div>
+  <!-- Barra superior -->
+  <div class="topbar">
+    <div class="menu-toggle"><i class="fas fa-ellipsis-v"></i></div>
+    <div class="topbar-right">
+      <!-- Perfil -->
+      <div class="profile">
+        <img src="https://via.placeholder.com/32" alt="Perfil">
+        <button>Felipe Ayres</button>
+      </div>
+    </div>
+  </div>
 
+  <!-- Conteúdo principal -->
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      
+      <div class="menu-item has-submenu"><i class="fas fa-home"></i><span class="menu-text">Início</span></div>
 
-<nav class="menu" id="menu">
-<button onclick="toggleSubmenu('produtos')">📦 Produtos</button>
-<div class="submenu" id="submenu-produtos">
-<button onclick="carregarConteudo('Cadastrar Produto')">➕ Cadastrar Produto</button>
-<button onclick="carregarConteudo('Listar Produtos')">📋 Listar Produtos</button>
-</div>
+      <div class="menu-item has-submenu"><i class="fas fa-boxes-stacked"></i><span class="menu-text">Estoque</span></div>
+      <div class="submenu">
+        <div class="submenu-item">Produtos</div>
+        <div class="submenu-item">Materiais</div>
+      </div>
 
+      <!-- Pedidos com 3 níveis -->
+      <div class="menu-item has-submenu"><i class="fas fa-file-alt"></i><span class="menu-text">Pedidos</span></div>
+      <div class="submenu">
+        <div class="submenu-item">Pedido de Compra</div>
+        <div class="submenu-item">Pedido de Venda</div>
 
-<button onclick="toggleSubmenu('vendas')">💰 Vendas</button>
-<div class="submenu" id="submenu-vendas">
-<button onclick="carregarConteudo('Nova Venda')">🛒 Nova Venda</button>
-<button onclick="carregarConteudo('Relatório de Vendas')">📊 Relatório de Vendas</button>
-</div>
+        <!-- Submenu de Pedido de Produção -->
+        <div class="submenu-item has-submenu">Pedido de Produção</div>
+        <div class="submenu">
+          <div class="submenu-item">Em Produção</div>
+          <div class="submenu-item">Cancelados</div>
+          <div class="submenu-item">Finalizados Hoje</div>
+        </div>
+      </div>
 
+      <div class="menu-item has-submenu"><i class="fas fa-envelope"></i><span class="menu-text">Relatórios</span></div>
+      <div class="submenu">
+        <div class="submenu-item">Relatório de produção</div>
+        <div class="submenu-item">Relatório de venda</div>
+        <div class="submenu-item">Relatório de compra</div>
+      </div>
 
-<button onclick="toggleSubmenu('clientes')">👥 Clientes</button>
-<div class="submenu" id="submenu-clientes">
-<button onclick="carregarConteudo('Cadastrar Cliente')">➕ Cadastrar Cliente</button>
-<button onclick="carregarConteudo('Listar Clientes')">📋 Listar Clientes</button>
-</div>
-</nav>
-</div>
+      <div class="menu-item has-submenu"><i class="fas fa-users"></i><span class="menu-text">Pessoas</span></div>
+      <div class="submenu">
+        <div class="submenu-item">Usuários</div>
+        <div class="submenu-item">Clientes</div>
+        <div class="submenu-item">Funcionários</div>
+      </div>
 
+      <div class="menu-item has-submenu"><i class="fas fa-cog"></i><span class="menu-text">Configurações</span></div>
+      <div class="submenu">
+        <div class="submenu-item">Submenu 1</div>
+        <div class="submenu-item">Submenu 2</div>
+      </div>
+    </div>
 
-<main id="conteudo">
-<h3>Bem-vindo ao sistema de Gestão de Estoque</h3>
-<p>Use o menu lateral à esquerda para navegar.</p>
-</main>
+    <!-- Área de conteúdo -->
+    <div class="content">
 
+    </div>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
