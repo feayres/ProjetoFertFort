@@ -1,97 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login — Mostrar/Ocultar senha</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tela de Login</title>
   <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
-  <div class="card" role="region" aria-label="Área de login">
-    <img class="logo" src="" alt="Logo" />
-
-    <form id="loginForm" autocomplete="on">
+  <div class="login-container">
+    <img src="/assets/logo-Photoroom.png" alt="Logo" />
+    <form id="loginForm">
       <div>
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" placeholder="seu@exemplo.com" required />
+        <input type="email" id="email" placeholder="seu@exemplo.com" required />
       </div>
 
-      <div class="input-wrap password">
-        <label for="password">Senha</label>
-        <input id="password" name="password" type="password" placeholder="********" required aria-describedby="pwd-help" />
-
-        <!-- botão que fica por cima do input, à direita. Usamos button (não input) para acessibilidade. -->
-        <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha" aria-pressed="false" title="Mostrar senha">
-          <!-- ícone SVG (olho). Vamos trocar pelo olho fechado quando necessário. -->
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="3" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
+      <div class="input-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" placeholder="********" required />
+        <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
       </div>
 
-      <button class="btn-primary" type="submit">Entrar</button>
-
-      <div class="muted-center">ou<br/><a href="#">Esqueceu a senha?</a></div>
+      <button type="submit">Entrar</button>
     </form>
+
+    <div class="divider">ou</div>
+
+    <a href="#" class="forgot" onclick="alert('Acesse como Master e altere a senha!')">Esqueceu a senha?</a>
   </div>
-
-  <script>
-    (function(){
-      const passwordInput = document.getElementById('password');
-      const toggle = document.getElementById('togglePassword');
-
-      // SVGs para olho aberto e olho fechado (olho com linha)
-      const eyeOpen = `
-        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="12" cy="12" r="3" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`;
-
-      const eyeClosed = `
-        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M17.94 17.94C16.12 19.2 14.12 20 12 20c-7 0-11-8-11-8 1.25-2.07 3-3.86 5.06-5.06" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M6.1 6.1C7.88 4.8 9.88 4 12 4c7 0 11 8 11 8-1.25 2.07-3 3.86-5.06 5.06" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M3 3l18 18" stroke="#0f1720" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`;
-
-      // Inicialmente mostra olho aberto (campo oculto)
-      toggle.innerHTML = eyeOpen;
-
-      toggle.addEventListener('click', function(){
-        const isPassword = passwordInput.type === 'password';
-        if(isPassword){
-          passwordInput.type = 'text';
-          toggle.innerHTML = eyeClosed; // ícone que indica 'fechar'
-          toggle.setAttribute('aria-label','Esconder senha');
-          toggle.setAttribute('title','Esconder senha');
-          toggle.setAttribute('aria-pressed','true');
-        } else {
-          passwordInput.type = 'password';
-          toggle.innerHTML = eyeOpen;
-          toggle.setAttribute('aria-label','Mostrar senha');
-          toggle.setAttribute('title','Mostrar senha');
-          toggle.setAttribute('aria-pressed','false');
-        }
-        // manter o foco no botão após mudança
-        toggle.focus();
-      });
-
-      // opcional: permitir alternar com tecla Enter/Space quando o botão estiver focado (já vem por padrão em <button>)
-
-      // evitar envio de form ao apertar Enter no botão do olho
-      toggle.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){
-          e.preventDefault();
-          toggle.click();
-        }
-      });
-
-      // Se quiser: clicar no ícone não tira foco do input (bom para usabilidade em mobile)
-      toggle.addEventListener('mousedown', function(e){ e.preventDefault(); });
-
-    })();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
